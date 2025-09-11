@@ -196,7 +196,7 @@ export function Education() {
                   <h3 className="text-xl font-semibold text-gray-900">Academic Goals</h3>
                 </div>
                 <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                  Currently focused on mastering advanced programming concepts, software engineering principles, 
+                  Currently focused on mastering programming languages, Game development, 
                   and building a strong foundation for a successful career in technology. I'm committed to 
                   maintaining academic excellence while gaining practical experience through personal projects.
                 </p>

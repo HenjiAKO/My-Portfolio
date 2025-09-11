@@ -74,7 +74,7 @@ export function Footer() {
               </span>
             </div>
             <p className="text-gray-300 leading-relaxed">
-              Web & Game Developer passionate about creating engaging digital experiences with C# and .NET technologies.
+              Web & Game Developer passionate about creating engaging digital experiences.
             </p>
             <div className="flex space-x-3">
               {socialLinks.map((link, index) => (
