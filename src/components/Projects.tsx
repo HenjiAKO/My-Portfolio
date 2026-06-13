@@ -1,200 +1,192 @@
-import { motion } from 'motion/react';
-import { Card, CardContent } from "./ui/card";
+import { motion } from "motion/react";
 import { Button } from "./ui/button";
-import { Badge } from "./ui/badge";
-import { ImageWithFallback } from './figma/ImageWithFallback';
-import { ExternalLink, Github, Calendar, Star } from 'lucide-react';
+import { ExternalLink, Github, ChevronRight, Calendar } from "lucide-react";
+import { useTranslation } from "../i18n/context";
+
+const accentColors = [
+  { border: "border-l-blue-500", glow: "shadow-blue-500/20", tag: "bg-blue-500/10 text-blue-400 border-blue-500/30", status: "bg-blue-500/20 text-blue-300 border-blue-500/40" },
+  { border: "border-l-emerald-500", glow: "shadow-emerald-500/20", tag: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30", status: "bg-emerald-500/20 text-emerald-300 border-emerald-500/40" },
+  { border: "border-l-purple-500", glow: "shadow-purple-500/20", tag: "bg-purple-500/10 text-purple-400 border-purple-500/30", status: "bg-purple-500/20 text-purple-300 border-purple-500/40" },
+  { border: "border-l-amber-500", glow: "shadow-amber-500/20", tag: "bg-amber-500/10 text-amber-400 border-amber-500/30", status: "bg-amber-500/20 text-amber-300 border-amber-500/40" },
+];
 
 export function Projects() {
+  const { t } = useTranslation();
+
   const projects = [
     {
-      title: "Verse of Shadows",
-      description: "An immersive indie game project featuring engaging gameplay mechanics and stunning pixel art visuals. This project showcases advanced game development concepts including character movement, collision detection, and interactive environments.",
-      image: "https://images.unsplash.com/photo-1642678730255-40a9e1847fb5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbmRpZSUyMGdhbWUlMjBwaXhlbCUyMGFydHxlbnwxfHx8fDE3NTc0Mzg3MjV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      technologies: ["MonoGame", "C#", "Aseprite", "Game Design"],
-      status: "In Development",
-      featured: true,
-      github: null,
+      titleKey: "projects.ingat_title",
+      descKey: "projects.ingat_desc",
+      technologies: ["Unity", "C#", "ShaderLab", "Interactive Storytelling"],
+      statusKey: "projects.status_development",
+      github: "https://github.com/HenjiAKO/Ingat-Visual-Novel-Game",
       demo: null,
-      year: "2024"
+      year: "2025",
     },
     {
-      title: "Snake Game",
-      description: "A classic Snake game implementation demonstrating fundamental game development principles. Features smooth gameplay, score tracking, and collision detection systems built with modern C# practices.",
-      image: "https://images.unsplash.com/photo-1618422168439-4b03d3a05b15?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxnYW1lJTIwZGV2ZWxvcG1lbnQlMjBjb2RpbmclMjBzY3JlZW58ZW58MXx8fHwxNzU3NDY1Mjg1fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      titleKey: "projects.shooting_title",
+      descKey: "projects.shooting_desc",
+      technologies: ["MonoGame", "C#", "Game Design", "Visual Studio"],
+      statusKey: "projects.status_completed",
+      github: "https://github.com/HenjiAKO/Shooting-Game",
+      demo: null,
+      year: "2024",
+    },
+    {
+      titleKey: "projects.snake_title",
+      descKey: "projects.snake_desc",
       technologies: ["C#", "Game Logic", "OOP", "Visual Studio"],
-      status: "Completed",
-      featured: false,
+      statusKey: "projects.status_completed",
       github: "https://github.com/HenjiAKO/SnakeGame",
       demo: null,
-      year: "2023"
+      year: "2023",
     },
-    {
-      title: "Portfolio Website",
-      description: "A responsive portfolio website showcasing my projects and skills. Built with modern web technologies and featuring smooth animations, interactive elements, and a game-inspired design aesthetic.",
-      image: "https://images.unsplash.com/photo-1555209183-8facf96a4349?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb2RpbmclMjB3b3Jrc3BhY2UlMjBzZXR1cHxlbnwxfHx8fDE3NTczODIwMjd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
-      technologies: ["React", "TypeScript", "Tailwind CSS", "Motion"],
-      status: "Live",
-      featured: false,
-      github: null,
-      demo: "#",
-      year: "2024"
-    }
   ];
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "In Development": return "bg-yellow-100 text-yellow-700";
-      case "Completed": return "bg-green-100 text-green-700";
-      case "Live": return "bg-blue-100 text-blue-700";
-      default: return "bg-gray-100 text-gray-700";
-    }
-  };
-
   return (
-    <section id="projects" className="py-20 bg-white">
-      <div className="container mx-auto px-4">
-        <motion.div 
-          initial={{ opacity: 0, y: 50 }}
+    <section id="projects" className="py-20 bg-background relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent pointer-events-none" />
+
+      <div className="container mx-auto px-4 relative">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold mb-4">
-            My <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Projects</span>
+          <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 rounded-full px-4 py-1.5 mb-4">
+            <span className="font-terminal text-xs text-primary tracking-wider uppercase">
+              {t("nav.projects")}
+            </span>
+            <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            <span className="text-foreground">{t("projects.title")} </span>
+            <span className="bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent">
+              {t("projects.subtitle")}
+            </span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            A showcase of my latest work in web and game development, demonstrating my skills and passion for creating engaging digital experiences
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-terminal text-sm tracking-wide">
+            &gt; {t("projects.description")}
+            <span className="animate-blink ml-0.5 text-primary">|</span>
           </p>
         </motion.div>
 
-        <div className="space-y-8">
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.title}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.8 }}
-              viewport={{ once: true }}
-            >
-              <Card className={`overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 ${
-                project.featured ? 'ring-2 ring-purple-200 bg-gradient-to-br from-purple-50 to-pink-50' : 'bg-white'
-              }`}>
-                <CardContent className="p-0">
-                  <div className={`grid ${project.featured ? 'lg:grid-cols-2' : 'md:grid-cols-3'} gap-0`}>
-                    <div className={`relative ${project.featured ? '' : 'md:col-span-1'} overflow-hidden`}>
-                      {project.featured && (
-                        <div className="absolute top-4 left-4 z-10">
-                          <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white">
-                            <Star className="w-3 h-3 mr-1" />
-                            Featured
-                          </Badge>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {projects.map((project, index) => {
+            const colors = accentColors[index % accentColors.length];
+            return (
+              <motion.div
+                key={project.titleKey}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.15, duration: 0.5, ease: "easeOut" }}
+                viewport={{ once: true, margin: "-50px" }}
+                className="group"
+              >
+                <div className={`h-full bg-card border border-border border-l-2 ${colors.border} rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl ${colors.glow} hover:-translate-y-2 hover:border-primary/30`}>
+                  <div className="relative overflow-hidden">
+                    <div className="h-36 bg-gradient-to-br from-primary/5 via-card to-muted/50 flex items-center justify-center border-b border-border/50">
+                      <div className="text-center p-4">
+                        <div className="w-14 h-14 mx-auto mb-2 rounded-xl bg-gradient-to-br from-primary/20 to-blue-500/20 flex items-center justify-center border border-primary/20">
+                          <Github className="w-7 h-7 text-primary/60" />
                         </div>
-                      )}
-                      <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ type: "spring", stiffness: 300 }}
-                        className="h-full"
-                      >
-                        <ImageWithFallback 
-                          src={project.image}
-                          alt={project.title}
-                          className={`w-full ${project.featured ? 'h-80' : 'h-48'} object-cover`}
-                        />
-                      </motion.div>
-                    </div>
-                    
-                    <div className={`p-6 ${project.featured ? '' : 'md:col-span-2'} flex flex-col justify-between`}>
-                      <div className="space-y-4">
-                        <div className="flex items-start justify-between">
-                          <div>
-                            <h3 className={`${project.featured ? 'text-2xl' : 'text-xl'} font-bold text-gray-900`}>
-                              {project.title}
-                            </h3>
-                            <div className="flex items-center space-x-2 mt-1">
-                              <Calendar className="w-4 h-4 text-muted-foreground" />
-                              <span className="text-sm text-muted-foreground">{project.year}</span>
-                            </div>
-                          </div>
-                          <Badge className={getStatusColor(project.status)}>
-                            {project.status}
-                          </Badge>
-                        </div>
-                        
-                        <p className="text-muted-foreground leading-relaxed">
-                          {project.description}
+                        <p className="text-xs font-terminal text-muted-foreground tracking-wider">
+                          {project.technologies[0].toUpperCase()}
                         </p>
-                        
-                        <div className="flex flex-wrap gap-2">
-                          {project.technologies.map((tech, techIndex) => (
-                            <motion.div
-                              key={tech}
-                              initial={{ scale: 0 }}
-                              whileInView={{ scale: 1 }}
-                              transition={{ delay: (index * 0.1) + (techIndex * 0.05), type: "spring", stiffness: 200 }}
-                              viewport={{ once: true }}
-                            >
-                              <Badge variant="outline" className="border-purple-200 text-purple-700">
-                                {tech}
-                              </Badge>
-                            </motion.div>
-                          ))}
-                        </div>
                       </div>
-                      
-                      <div className="flex space-x-3 mt-6">
-                        {project.github && (
-                          <Button 
-                            variant="outline" 
-                            size="sm"
-                            className="border-purple-200 hover:bg-purple-50"
-                            onClick={() => window.open(project.github, '_blank')}
-                          >
-                            <Github className="w-4 h-4 mr-2" />
-                            Code
-                          </Button>
-                        )}
-                        {project.demo && (
-                          <Button 
-                            size="sm"
-                            className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
-                            onClick={() => window.open(project.demo, '_blank')}
-                          >
-                            <ExternalLink className="w-4 h-4 mr-2" />
-                            View Project
-                          </Button>
-                        )}
-                        {!project.github && !project.demo && (
-                          <Badge variant="secondary" className="text-muted-foreground">
-                            Coming Soon
-                          </Badge>
-                        )}
-                      </div>
+                    </div>
+                    <div className="absolute top-3 right-3">
+                      <span className={`font-terminal text-[10px] px-2 py-1 rounded-full border ${colors.status} backdrop-blur-sm`}>
+                        {t(project.statusKey as any)}
+                      </span>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+
+                  <div className="p-5 space-y-4">
+                    <div className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                      <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors">
+                        {t(project.titleKey as any)}
+                      </h3>
+                    </div>
+
+                    <div className="flex items-center gap-3 text-xs text-muted-foreground font-terminal">
+                      <div className="flex items-center gap-1">
+                        <Calendar className="w-3 h-3" />
+                        <span>{project.year}</span>
+                      </div>
+                      <span className="text-border">//</span>
+                      <span className="text-primary/60">v1.0.0</span>
+                    </div>
+
+                    <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                      {t(project.descKey as any)}
+                    </p>
+
+                    <div className="flex flex-wrap gap-1.5">
+                      {project.technologies.map((tech) => (
+                        <span
+                          key={tech}
+                          className={`font-terminal text-[10px] px-2 py-0.5 rounded border ${colors.tag} tracking-wider uppercase`}
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center gap-3 pt-3 border-t border-border/50">
+                      {project.github && (
+                        <button
+                          onClick={() => window.open(project.github, "_blank")}
+                          className="flex items-center gap-1.5 text-xs font-terminal text-muted-foreground hover:text-primary transition-colors tracking-wider uppercase"
+                        >
+                          <Github className="w-3.5 h-3.5" />
+                          {t("projects.code")}
+                        </button>
+                      )}
+                      {project.demo && (
+                        <button
+                          onClick={() => window.open(project.demo, "_blank")}
+                          className="flex items-center gap-1.5 text-xs font-terminal text-primary hover:text-primary/80 transition-colors tracking-wider uppercase"
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" />
+                          {t("projects.view")}
+                        </button>
+                      )}
+                      {!project.github && !project.demo && (
+                        <span className="text-[10px] font-terminal text-muted-foreground italic">
+                          {t("projects.coming_soon")}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
 
-        <motion.div 
-          initial={{ opacity: 0, y: 50 }}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
           className="text-center mt-12"
         >
-          <p className="text-muted-foreground mb-4">More projects coming soon!</p>
-          <Button 
-            variant="outline" 
+          <p className="text-sm text-muted-foreground mb-4 font-terminal">
+            <span className="text-primary">&gt;</span> {t("projects.more")}
+          </p>
+          <Button
+            variant="outline"
             size="lg"
-            className="border-purple-200 hover:bg-purple-50"
-            onClick={() => window.open('https://github.com/HenjiAKO', '_blank')}
+            className="group border-border hover:border-primary/50 hover:bg-accent/50 transition-all duration-300 font-terminal tracking-wider"
+            onClick={() => window.open("https://github.com/HenjiAKO", "_blank")}
           >
             <Github className="w-4 h-4 mr-2" />
-            View All On GitHub
+            {t("projects.view_all")}
+            <ChevronRight className="w-3.5 h-3.5 ml-1 group-hover:translate-x-1 transition-transform" />
           </Button>
         </motion.div>
       </div>

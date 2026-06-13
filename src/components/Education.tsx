@@ -1,173 +1,159 @@
-import { motion } from 'motion/react';
+import { motion } from "motion/react";
 import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
-import { GraduationCap, Calendar, MapPin, Award, BookOpen } from 'lucide-react';
+import { GraduationCap, Calendar, MapPin, Award, BookOpen } from "lucide-react";
+import { useTranslation } from "../i18n/context";
 
 export function Education() {
+  const { t } = useTranslation();
+
   const education = [
     {
-      degree: "Bachelor of Science in Computer Science (BSCS)",
-      institution: "STI College Marikina",
-      period: "2024 - Present",
-      status: "Current",
-      location: "Marikina, Philippines",
-      description: "Currently pursuing my bachelor's degree with a focus on software development, algorithms, and computer programming fundamentals.",
-      subjects: ["Data Structures", "Algorithms", "Object-Oriented Programming", "Database Systems", "Software Engineering"],
+      degreeKey: "education.degree1",
+      institutionKey: "education.institution1",
+      periodKey: "education.period1",
+      statusKey: "education.status1",
+      locationKey: "education.location1",
+      descKey: "education.desc1",
+      statusClass: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
+      gpaKey: "education.gpa_ongoing",
+      gpaClass: "border-blue-200 text-blue-700 bg-blue-50 dark:border-blue-800 dark:text-blue-400 dark:bg-blue-900/20",
       current: true,
-      gpa: "Ongoing"
+      subjects: ["Data Structures", "Algorithms", "Object-Oriented Programming", "Database Systems", "Software Engineering"],
     },
     {
-      degree: "Senior High School Graduate",
-      institution: "STI College Marikina", 
-      period: "2022 - 2024",
-      status: "Completed",
-      location: "Marikina, Philippines",
-      description: "Completed senior high school education with a strong foundation in mathematics, science, and early programming concepts.",
+      degreeKey: "education.degree2",
+      institutionKey: "education.institution2",
+      periodKey: "education.period2",
+      statusKey: "education.status2",
+      locationKey: "education.location2",
+      descKey: "education.desc2",
+      statusClass: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
+      gpaKey: "education.gpa_standing",
+      gpaClass: "border-green-200 text-green-700 bg-green-50 dark:border-green-800 dark:text-green-400 dark:bg-green-900/20",
+      current: false,
       subjects: ["Mathematics", "Physics", "Computer Programming", "Research", "English"],
-      current: false,
-      gpa: "Good Standing"
     },
     {
-      degree: "Junior High School Graduate",
-      institution: "Missionary Sisters of the Sacred Heart",
-      period: "2018 - 2022",
-      status: "Completed with Honor",
-      location: "Philippines",
-      description: "Graduated with honors, demonstrating academic excellence and strong foundational knowledge across all core subjects.",
-      subjects: ["Mathematics", "Science", "English", "Filipino", "History"],
+      degreeKey: "education.degree3",
+      institutionKey: "education.institution3",
+      periodKey: "education.period3",
+      statusKey: "education.status3",
+      locationKey: "education.location3",
+      descKey: "education.desc3",
+      statusClass: "bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400",
+      gpaKey: "education.gpa_honor",
+      gpaClass: "border-amber-200 text-amber-700 bg-amber-50 dark:border-amber-800 dark:text-amber-400 dark:bg-amber-900/20",
       current: false,
-      gpa: "With Honor"
-    }
+      subjects: ["Mathematics", "Science", "English", "Filipino", "History"],
+    },
   ];
 
   return (
-    <section id="education" className="py-20 bg-white">
+    <section id="education" className="py-20 bg-muted/50">
       <div className="container mx-auto px-4">
-        <motion.div 
-          initial={{ opacity: 0, y: 50 }}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold mb-4">
-            My <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Education</span>
+          <h2 className="text-4xl font-bold mb-4 text-foreground">
+            {t("education.title")}{" "}
+            <span className="text-primary">{t("education.subtitle")}</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            My academic journey and the educational foundation that supports my passion for technology and development
+            {t("education.description")}
           </p>
         </motion.div>
 
         <div className="max-w-4xl mx-auto">
           <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-purple-500 to-pink-500 hidden md:block"></div>
-            
+            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-primary/20 hidden md:block" />
+
             {education.map((edu, index) => (
               <motion.div
-                key={edu.institution + edu.period}
-                initial={{ opacity: 0, x: -50 }}
+                key={edu.degreeKey}
+                initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.2, duration: 0.8 }}
+                transition={{ delay: index * 0.15, duration: 0.6 }}
                 viewport={{ once: true }}
                 className="relative mb-8 md:mb-12"
               >
-                {/* Timeline dot */}
-                <motion.div 
+                <motion.div
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
-                  transition={{ delay: index * 0.2 + 0.3, type: "spring", stiffness: 300 }}
+                  transition={{ delay: index * 0.15 + 0.2, type: "spring", stiffness: 300 }}
                   viewport={{ once: true }}
-                  className={`absolute left-6 w-4 h-4 rounded-full border-4 border-white shadow-lg hidden md:block ${
-                    edu.current ? 'bg-gradient-to-r from-green-500 to-blue-500' : 'bg-gradient-to-r from-purple-500 to-pink-500'
+                  className={`absolute left-6 w-4 h-4 rounded-full border-4 border-background shadow hidden md:block ${
+                    edu.current ? "bg-primary" : "bg-muted-foreground/50"
                   }`}
-                ></motion.div>
-                
+                />
+
                 <div className="md:ml-16">
-                  <Card className={`border-0 shadow-lg hover:shadow-xl transition-all duration-300 ${
-                    edu.current 
-                      ? 'bg-gradient-to-br from-green-50 to-blue-50 ring-2 ring-green-200' 
-                      : 'bg-white/80 backdrop-blur-sm'
-                  }`}>
+                  <Card
+                    className={`border border-border bg-card hover:shadow-md transition-all duration-300 ${
+                      edu.current ? "ring-1 ring-primary/20" : ""
+                    }`}
+                  >
                     <CardContent className="p-6">
                       <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4">
                         <div className="space-y-2">
                           <div className="flex items-center space-x-2">
-                            <GraduationCap className={`w-5 h-5 ${edu.current ? 'text-green-500' : 'text-purple-500'}`} />
-                            <h3 className="text-xl font-bold text-gray-900">{edu.degree}</h3>
+                            <GraduationCap className={`w-5 h-5 ${edu.current ? "text-primary" : "text-muted-foreground"}`} />
+                            <h3 className="text-xl font-bold text-foreground">
+                              {t(edu.degreeKey as any)}
+                            </h3>
                             {edu.current && (
-                              <Badge className="bg-green-100 text-green-700">
+                              <Badge className="bg-primary text-primary-foreground">
                                 <BookOpen className="w-3 h-3 mr-1" />
-                                Current
+                                {t("education.current")}
                               </Badge>
                             )}
                           </div>
-                          <p className={`text-lg font-semibold ${edu.current ? 'text-green-600' : 'text-purple-600'}`}>
-                            {edu.institution}
+                          <p className={`text-lg font-semibold ${edu.current ? "text-primary" : "text-foreground"}`}>
+                            {t(edu.institutionKey as any)}
                           </p>
                           <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-1 sm:space-y-0 text-muted-foreground">
                             <div className="flex items-center space-x-1">
                               <Calendar className="w-4 h-4" />
-                              <span>{edu.period}</span>
+                              <span>{t(edu.periodKey as any)}</span>
                             </div>
                             <div className="flex items-center space-x-1">
                               <MapPin className="w-4 h-4" />
-                              <span>{edu.location}</span>
+                              <span>{t(edu.locationKey as any)}</span>
                             </div>
                           </div>
                         </div>
-                        
+
                         <div className="mt-4 lg:mt-0 flex flex-col space-y-2">
-                          <Badge 
-                            variant="outline" 
-                            className={`w-fit ${
-                              edu.gpa === "With Honor" 
-                                ? 'border-yellow-300 text-yellow-700 bg-yellow-50' 
-                                : edu.current 
-                                ? 'border-green-300 text-green-700 bg-green-50'
-                                : 'border-purple-200 text-purple-700 bg-purple-50'
-                            }`}
-                          >
-                            {edu.gpa === "With Honor" && <Award className="w-3 h-3 mr-1" />}
-                            {edu.gpa}
+                          <Badge variant="outline" className={edu.gpaClass}>
+                            {edu.gpaKey === "education.gpa_honor" && <Award className="w-3 h-3 mr-1" />}
+                            {t(edu.gpaKey as any)}
                           </Badge>
-                          <Badge 
-                            variant="secondary" 
-                            className={`w-fit ${
-                              edu.status === "Completed with Honor" 
-                                ? 'bg-yellow-100 text-yellow-700' 
-                                : edu.current 
-                                ? 'bg-green-100 text-green-700'
-                                : 'bg-gray-100 text-gray-700'
-                            }`}
-                          >
-                            {edu.status}
-                          </Badge>
+                          <Badge className={edu.statusClass}>{t(edu.statusKey as any)}</Badge>
                         </div>
                       </div>
-                      
+
                       <p className="text-muted-foreground leading-relaxed mb-6">
-                        {edu.description}
+                        {t(edu.descKey as any)}
                       </p>
-                      
+
                       <div>
-                        <h4 className="font-semibold text-gray-900 mb-3">Key Subjects</h4>
+                        <h4 className="font-semibold text-foreground mb-3">{t("education.subjects")}</h4>
                         <div className="flex flex-wrap gap-2">
                           {edu.subjects.map((subject, subjectIndex) => (
                             <motion.div
                               key={subject}
-                              initial={{ scale: 0, rotate: -180 }}
-                              whileInView={{ scale: 1, rotate: 0 }}
-                              transition={{ delay: (index * 0.2) + (subjectIndex * 0.05), type: "spring", stiffness: 200 }}
+                              initial={{ scale: 0 }}
+                              whileInView={{ scale: 1 }}
+                              transition={{ delay: (index * 0.15) + (subjectIndex * 0.05), type: "spring", stiffness: 200 }}
                               viewport={{ once: true }}
                             >
-                              <Badge 
-                                variant="secondary" 
-                                className={`${
-                                  edu.current 
-                                    ? 'bg-gradient-to-r from-green-100 to-blue-100 text-green-700 hover:from-green-200 hover:to-blue-200' 
-                                    : 'bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 hover:from-purple-200 hover:to-pink-200'
-                                } transition-all duration-300`}
+                              <Badge
+                                variant="secondary"
+                                className="bg-muted text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-all"
                               >
                                 {subject}
                               </Badge>
@@ -181,24 +167,22 @@ export function Education() {
               </motion.div>
             ))}
           </div>
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 50 }}
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
             className="text-center mt-12"
           >
-            <Card className="border-0 shadow-lg bg-gradient-to-br from-purple-50 to-pink-50">
+            <Card className="border border-border bg-card">
               <CardContent className="p-8">
                 <div className="flex items-center justify-center space-x-2 mb-4">
-                  <GraduationCap className="w-6 h-6 text-purple-500" />
-                  <h3 className="text-xl font-semibold text-gray-900">Academic Goals</h3>
+                  <GraduationCap className="w-6 h-6 text-primary" />
+                  <h3 className="text-xl font-semibold text-foreground">{t("education.goals_title")}</h3>
                 </div>
                 <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                  Currently focused on mastering programming languages, Game development, 
-                  and building a strong foundation for a successful career in technology. I'm committed to 
-                  maintaining academic excellence while gaining practical experience through personal projects.
+                  {t("education.goals_desc")}
                 </p>
               </CardContent>
             </Card>
